@@ -25,7 +25,7 @@ public class FichaTreino {
 	
 	@Column(name = "data")
 	@NotNull
-	private LocalDate dataTreino;
+	private LocalDate data;
 	
 	@ManyToOne(targetEntity = Professor.class)
 	@JoinColumn(name = "id_professor")
@@ -45,7 +45,7 @@ public class FichaTreino {
 	
 	@Column(name = "tipo")
 	@NotNull
-	private String tipoTreino;
+	private String tipo;
 	
 	@Column(name = "info_adicional")
 	@NotNull
@@ -59,12 +59,12 @@ public class FichaTreino {
 		this.id = id;
 	}
 	
-	public LocalDate getDataTreino() {
-		return dataTreino;
+	public LocalDate getData() {
+		return data;
 	}
 	
-	public void setDataTreino(LocalDate dataTreino) {
-		this.dataTreino = dataTreino;
+	public void setData(LocalDate data) {
+		this.data = data;
 	}
 	
 	public Professor getProfessor() {
@@ -93,12 +93,12 @@ public class FichaTreino {
 		return nomeAluno;
 	}
 	
-	public String getTipoTreino() {
-		return tipoTreino;
+	public String getTipo() {
+		return tipo;
 	}
 	
-	public void setTipoTreino(String tipoTreino) {
-		this.tipoTreino = tipoTreino;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 	
 	public String getInfoAdicional() {
@@ -116,8 +116,8 @@ public class FichaTreino {
 		buffer.append("\nId: " + id);
 		buffer.append("\nProfessor: " + nomeProfessor);
 		buffer.append("\nAluno: " + nomeAluno);
-		buffer.append("\nData Treino: " + dataTreino);
-		buffer.append("\nTipo de Treino: " + tipoTreino);
+		buffer.append("\nData Treino: " + data);
+		buffer.append("\nTipo de Treino: " + tipo);
 		buffer.append("\nInformações Adicionais: " + infoAdicional);
 		return buffer.toString();
 	}

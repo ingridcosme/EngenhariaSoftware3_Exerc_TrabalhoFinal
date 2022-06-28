@@ -33,15 +33,15 @@ public class Pagamento {
 	
 	@Column(name = "data")
 	@NotNull
-	private LocalDate dataPagamento;
+	private LocalDate data;
 	
 	@Column(name = "valor")
 	@NotNull
-	private double valorPagamento;
+	private double valor;
 	
 	@Column(name = "tipo")
 	@NotNull
-	private String tipoPagamento;
+	private String tipo;
 	
 	@Column(name = "info_adicional")
 	@NotNull
@@ -68,28 +68,28 @@ public class Pagamento {
 		return nomeAluno;
 	}
 	
-	public LocalDate getDataPagamento() {
-		return dataPagamento;
+	public LocalDate getData() {
+		return data;
 	}
 	
-	public void setDataPagamento(LocalDate dataPagamento) {
-		this.dataPagamento = dataPagamento;
+	public void setData(LocalDate data) {
+		this.data = data;
 	}
 	
-	public double getValorPagamento() {
-		return valorPagamento;
+	public double getValor() {
+		return valor;
 	}
 	
-	public void setValorPagamento(double valorPagamento) {
-		this.valorPagamento = valorPagamento;
+	public void setValor(double valor) {
+		this.valor = valor;
 	}
 	
-	public String getTipoPagamento() {
-		return tipoPagamento;
+	public String getTipo() {
+		return tipo;
 	}
 	
-	public void setTipoPagamento(String tipoPagamento) {
-		this.tipoPagamento = tipoPagamento;
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 	
 	public String getInfoAdicional() {
@@ -106,9 +106,9 @@ public class Pagamento {
 		buffer.append("Pagamento");
 		buffer.append("\nId: " + id);
 		buffer.append("\nAluno: " + nomeAluno);
-		buffer.append("\nData Pagamento: " + dataPagamento);
-		buffer.append("\nValor: R$ " + valorPagamento);
-		buffer.append("\nForma de Pagamento: " + tipoPagamento);
+		buffer.append("\nData Pagamento: " + data);
+		buffer.append("\nValor: R$ " + valor);
+		buffer.append("\nForma de Pagamento: " + tipo);
 		buffer.append("\nInformações Adicionais: " + infoAdicional);
 		return buffer.toString();
 	}

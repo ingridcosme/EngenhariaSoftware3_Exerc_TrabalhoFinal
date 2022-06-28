@@ -28,37 +28,37 @@ import persistence.AlunoDao;
 import persistence.PagamentoDao;
 import util.HibernateUtil;
 
-public class PagamentoControl implements IAcoesStrategy<Pagamento> {
+public class PagamentoControl implements IAcoes<Pagamento> {
 	
 	private ObservableList<Pagamento> pagamentosList = FXCollections.observableArrayList();
 	private TableView<Pagamento> table = new TableView<>();
 	private Aluno aluno;
 	
-	private IntegerProperty idPagamento = new SimpleIntegerProperty();
+	private IntegerProperty id = new SimpleIntegerProperty();
 	private StringProperty nomeAluno = new SimpleStringProperty("");
-	private ObjectProperty<LocalDate> dataPagamento = new SimpleObjectProperty<>();
-	private DoubleProperty valorPagamento = new SimpleDoubleProperty();
-	private StringProperty tipoPagamento = new SimpleStringProperty("");
+	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<>();
+	private DoubleProperty valor = new SimpleDoubleProperty();
+	private StringProperty tipo = new SimpleStringProperty("");
 	private StringProperty infoAdicional = new SimpleStringProperty("");
 
-	public IntegerProperty idPagamentoProperty() {
-		return idPagamento;
+	public IntegerProperty idProperty() {
+		return id;
 	}
 	
 	public StringProperty nomeAlunoProperty() {
 		return nomeAluno;
 	}
 	
-	public ObjectProperty<LocalDate> dataPagamentoProperty() {
-		return dataPagamento;
+	public ObjectProperty<LocalDate> dataProperty() {
+		return data;
 	}
 
-	public DoubleProperty valorPagamentoProperty() {
-		return valorPagamento;
+	public DoubleProperty valorProperty() {
+		return valor;
 	}
 	
-	public StringProperty tipoPagamentoProperty() {
-		return tipoPagamento;
+	public StringProperty tipoProperty() {
+		return tipo;
 	}
 
 	public StringProperty infoAdicionalProperty() {
@@ -74,15 +74,15 @@ public class PagamentoControl implements IAcoesStrategy<Pagamento> {
 		TableColumn<Pagamento, String> tipoPagCol = new TableColumn<>("Forma de Pagamento");
 		TableColumn<Pagamento, String> infoCol = new TableColumn<>("Informações Adicionais");
 
-		idCol.setCellValueFactory(new PropertyValueFactory<Pagamento, String>("idPagamento"));
+		idCol.setCellValueFactory(new PropertyValueFactory<Pagamento, String>("id"));
 		alunoCol.setCellValueFactory(new PropertyValueFactory<Pagamento, String>("nomeAluno"));
 		dataPagCol.setCellValueFactory(data -> {
-			LocalDate dataPag = data.getValue().getDataPagamento();
+			LocalDate dataPag = data.getValue().getData();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			return new ReadOnlyStringWrapper(dataPag.format(formatter));
 		});
-		valorPagCol.setCellValueFactory(new PropertyValueFactory<Pagamento, String>("valorPagamento"));
-		tipoPagCol.setCellValueFactory(new PropertyValueFactory<Pagamento, String>("tipoPagamento"));
+		valorPagCol.setCellValueFactory(new PropertyValueFactory<Pagamento, String>("valor"));
+		tipoPagCol.setCellValueFactory(new PropertyValueFactory<Pagamento, String>("tipo"));
 		infoCol.setCellValueFactory(new PropertyValueFactory<Pagamento, String>("infoAdicional"));
 		
 		table.getColumns().addAll(idCol, alunoCol, dataPagCol, valorPagCol, tipoPagCol, infoCol);
@@ -93,6 +93,7 @@ public class PagamentoControl implements IAcoesStrategy<Pagamento> {
 		return table;
 	}
 
+	@Override
 	public void adicionar() throws ClassNotFoundException, SQLException {
 		Pagamento pag = getEntidade();
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -104,12 +105,13 @@ public class PagamentoControl implements IAcoesStrategy<Pagamento> {
 		pagamentosList.addAll(pags);
 	}
 	
+	@Override
 	public void pesquisar() throws ClassNotFoundException, SQLException {
 		Pagamento pag = getEntidade();
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		PagamentoDao dao = new PagamentoDao(sessionFactory);
 		
-		if(idPagamento.get() != 0) {
+		if(id.get() > 0) {
 			Pagamento pagamento = dao.selectOne(pag);
 			pagamentosList.clear();
 			pagamentosList.add(pagamento);
@@ -130,6 +132,7 @@ public class PagamentoControl implements IAcoesStrategy<Pagamento> {
 		nomeAluno.set(aluno.getNome());
 	}
 	
+	@Override
 	public void atualizar() throws ClassNotFoundException, SQLException {
 		Pagamento pag = getEntidade();
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -141,6 +144,7 @@ public class PagamentoControl implements IAcoesStrategy<Pagamento> {
 		pagamentosList.addAll(pags);
 	}
 	
+	@Override
 	public void excluir() throws ClassNotFoundException, SQLException {
 		Pagamento pag = getEntidade();
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -152,6 +156,7 @@ public class PagamentoControl implements IAcoesStrategy<Pagamento> {
 		pagamentosList.addAll(pags);
 	}
 	
+	@Override
 	public void listar() throws ClassNotFoundException, SQLException {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		PagamentoDao dao = new PagamentoDao(sessionFactory);
@@ -163,10 +168,10 @@ public class PagamentoControl implements IAcoesStrategy<Pagamento> {
 	
 	public Pagamento getEntidade() {
 		Pagamento pag = new Pagamento();
-		pag.setId(idPagamento.get());
-		pag.setDataPagamento(dataPagamento.get());
-		pag.setValorPagamento(valorPagamento.get());
-		pag.setTipoPagamento(tipoPagamento.get());
+		pag.setId(id.get());
+		pag.setData(data.get());
+		pag.setValor(valor.get());
+		pag.setTipo(tipo.get());
 		pag.setInfoAdicional(infoAdicional.get());
 		
 		if(!nomeAluno.get().isEmpty()) {
@@ -185,11 +190,11 @@ public class PagamentoControl implements IAcoesStrategy<Pagamento> {
 	}
 	
 	public void setEntidade(Pagamento pag) {
-		idPagamento.set(pag.getId());
+		id.set(pag.getId());
 		nomeAluno.set(pag.getAluno().getNome());
-		dataPagamento.set(pag.getDataPagamento());
-		valorPagamento.set(pag.getValorPagamento());
-		tipoPagamento.set(pag.getTipoPagamento());
+		data.set(pag.getData());
+		valor.set(pag.getValor());
+		tipo.set(pag.getTipo());
 		infoAdicional.set(pag.getInfoAdicional());
 	}
 	

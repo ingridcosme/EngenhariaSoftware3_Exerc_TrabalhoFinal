@@ -85,11 +85,11 @@ public class FichaTreinoBoundary extends Application {
 		StringConverter<LocalDate> converterDate = new LocalDateStringConverter();
 		StringConverter<Number> converterNumber = new NumberStringConverter();
 
-		Bindings.bindBidirectional(idTxt.textProperty(), control.idTreinoProperty(), converterNumber);
+		Bindings.bindBidirectional(idTxt.textProperty(), control.idProperty(), converterNumber);
 		Bindings.bindBidirectional(professorTxt.textProperty(), control.nomeProfessorProperty());
 		Bindings.bindBidirectional(alunoTxt.textProperty(), control.nomeAlunoProperty());
-		Bindings.bindBidirectional(dataTreinoTxt.textProperty(), control.dataTreinoProperty(), converterDate);
-		Bindings.bindBidirectional(tipoTreinoTxt.textProperty(), control.tipoTreinoProperty());
+		Bindings.bindBidirectional(dataTreinoTxt.textProperty(), control.dataProperty(), converterDate);
+		Bindings.bindBidirectional(tipoTreinoTxt.textProperty(), control.tipoProperty());
 		Bindings.bindBidirectional(infoTxt.textProperty(), control.infoAdicionalProperty());
 		
 		pesquisarProfessorBt.setOnAction((e) -> {
@@ -100,7 +100,6 @@ public class FichaTreinoBoundary extends Application {
 				ex.printStackTrace();
 			}
 		});
-		
 		
 		pesquisarAlunoBt.setOnAction((e) -> {
 			try {

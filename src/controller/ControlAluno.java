@@ -25,7 +25,7 @@ import model.Endereco;
 import persistence.AlunoDao;
 import util.HibernateUtil;
 
-public class ControlAluno implements IAcoesStrategy<Aluno> {
+public class ControlAluno implements IAcoes<Aluno> {
 
 	private Endereco endereco;
 	private ObservableList<Aluno> alunosLista = FXCollections.observableArrayList();
@@ -98,6 +98,7 @@ public class ControlAluno implements IAcoesStrategy<Aluno> {
 		table.setItems(alunosLista);
 	}
 
+	@Override
 	public void adicionar() throws ClassNotFoundException, SQLException {
 		Aluno aluno = getEntidade();
 		aluno.getEndereco().setId(0);
@@ -110,12 +111,13 @@ public class ControlAluno implements IAcoesStrategy<Aluno> {
 		alunosLista.addAll(als);
 	}
 
+	@Override
 	public void pesquisar() throws ClassNotFoundException, SQLException {
 		Aluno aluno = getEntidade();
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		AlunoDao dao = new AlunoDao(sessionFactory);
 		
-		if(id.get() != 0 || !nome.get().isEmpty()) {
+		if(!nome.get().isEmpty()) {
 			Aluno al = dao.selectOne(aluno);
 			alunosLista.clear();
 			alunosLista.add(al);
@@ -125,6 +127,7 @@ public class ControlAluno implements IAcoesStrategy<Aluno> {
 		}
 	}
 	
+	@Override
 	public void atualizar() throws ClassNotFoundException, SQLException {
 		Aluno aluno = getEntidade();
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -136,6 +139,7 @@ public class ControlAluno implements IAcoesStrategy<Aluno> {
 		alunosLista.addAll(als);
 	}
 	
+	@Override
 	public void excluir() throws ClassNotFoundException, SQLException {
 		Aluno aluno = getEntidade();
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -147,6 +151,7 @@ public class ControlAluno implements IAcoesStrategy<Aluno> {
 		alunosLista.addAll(als);
 	}
 	
+	@Override
 	public void listar() throws ClassNotFoundException, SQLException {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		AlunoDao dao = new AlunoDao(sessionFactory);

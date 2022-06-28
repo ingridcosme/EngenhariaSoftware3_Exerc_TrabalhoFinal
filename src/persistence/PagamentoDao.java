@@ -78,9 +78,9 @@ public class PagamentoDao implements IObjDao<Pagamento>, IPagamentoDao {
 			
 			Pagamento pagamento = new Pagamento();
 			pagamento.setId(Integer.parseInt(obj[10].toString()));
-			pagamento.setDataPagamento(LocalDate.parse(obj[11].toString()));
-			pagamento.setValorPagamento(Double.parseDouble(obj[12].toString()));
-			pagamento.setTipoPagamento(obj[13].toString());
+			pagamento.setData(LocalDate.parse(obj[11].toString()));
+			pagamento.setValor(Double.parseDouble(obj[12].toString()));
+			pagamento.setTipo(obj[13].toString());
 			pagamento.setInfoAdicional(obj[14].toString());
 			pagamento.setAluno(aluno);
 
@@ -98,12 +98,10 @@ public class PagamentoDao implements IObjDao<Pagamento>, IPagamentoDao {
 		sql.append("p.id, p.data, p.valor, p.tipo, p.info_adicional ");
 		sql.append("FROM aluno a, endereco e, pagamento p ");
 		sql.append("WHERE a.id = p.id_aluno AND e.id = a.id_endereco ");
-		sql.append("AND a.id = ?1 OR a.nome LIKE '%?2%' ");
+		sql.append("AND a.nome LIKE '%" + pag.getAluno().getNome() + "%' ");
 
 		EntityManager entityManager = sf.createEntityManager();
 		Query query = entityManager.createNativeQuery(sql.toString());
-		query.setParameter(1, pag.getAluno().getId());
-		query.setParameter(2, pag.getAluno().getNome());
 
 		List<Object[]> pagamentosResultSet = query.getResultList();
 		List<Pagamento> pagamentos = new ArrayList<Pagamento>();
@@ -121,9 +119,9 @@ public class PagamentoDao implements IObjDao<Pagamento>, IPagamentoDao {
 			
 			pag = new Pagamento();
 			pag.setId(Integer.parseInt(obj[10].toString()));
-			pag.setDataPagamento(LocalDate.parse(obj[11].toString()));
-			pag.setValorPagamento(Double.parseDouble(obj[12].toString()));
-			pag.setTipoPagamento(obj[13].toString());
+			pag.setData(LocalDate.parse(obj[11].toString()));
+			pag.setValor(Double.parseDouble(obj[12].toString()));
+			pag.setTipo(obj[13].toString());
 			pag.setInfoAdicional(obj[14].toString());
 			pag.setAluno(aluno);
 
@@ -162,9 +160,9 @@ public class PagamentoDao implements IObjDao<Pagamento>, IPagamentoDao {
 			
 			pag = new Pagamento();
 			pag.setId(Integer.parseInt(obj[10].toString()));
-			pag.setDataPagamento(LocalDate.parse(obj[11].toString()));
-			pag.setValorPagamento(Double.parseDouble(obj[12].toString()));
-			pag.setTipoPagamento(obj[13].toString());
+			pag.setData(LocalDate.parse(obj[11].toString()));
+			pag.setValor(Double.parseDouble(obj[12].toString()));
+			pag.setTipo(obj[13].toString());
 			pag.setInfoAdicional(obj[14].toString());
 			pag.setAluno(aluno);
 			

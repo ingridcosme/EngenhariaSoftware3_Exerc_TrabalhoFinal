@@ -27,7 +27,7 @@ import model.ProfessorBuilder;
 import persistence.ProfessorDao;
 import util.HibernateUtil;
 
-public class ControlProfessor implements IAcoesStrategy<Professor> {
+public class ControlProfessor implements IAcoes<Professor> {
 
 	private ObservableList<Professor> professoresLista = FXCollections.observableArrayList();
 	private TableView<Professor> table = new TableView<>();
@@ -107,6 +107,7 @@ public class ControlProfessor implements IAcoesStrategy<Professor> {
 		table.setItems(professoresLista);
 	}
 
+	@Override
 	public void adicionar() throws ClassNotFoundException, SQLException {
 		Professor professor = getEntidade();
 		professor.getEndereco().setId(0);
@@ -119,12 +120,13 @@ public class ControlProfessor implements IAcoesStrategy<Professor> {
 		professoresLista.addAll(profs);
 	}
 
+	@Override
 	public void pesquisar() throws ClassNotFoundException, SQLException {
 		Professor professor = getEntidade();
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		ProfessorDao dao = new ProfessorDao(sessionFactory);
 		
-		if(id.get() != 0 || !nome.get().isEmpty()) {
+		if(!nome.get().isEmpty()) {
 			Professor prof = dao.selectOne(professor);
 			professoresLista.clear();
 			professoresLista.add(prof);
@@ -134,6 +136,7 @@ public class ControlProfessor implements IAcoesStrategy<Professor> {
 		}
 	}
 	
+	@Override
 	public void atualizar() throws ClassNotFoundException, SQLException {
 		Professor professor = getEntidade();
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -145,6 +148,7 @@ public class ControlProfessor implements IAcoesStrategy<Professor> {
 		professoresLista.addAll(profs);
 	}
 	
+	@Override
 	public void excluir() throws ClassNotFoundException, SQLException {
 		Professor professor = getEntidade();
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -156,6 +160,7 @@ public class ControlProfessor implements IAcoesStrategy<Professor> {
 		professoresLista.addAll(profs);
 	}
 	
+	@Override
 	public void listar() throws ClassNotFoundException, SQLException {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		ProfessorDao dao = new ProfessorDao(sessionFactory);

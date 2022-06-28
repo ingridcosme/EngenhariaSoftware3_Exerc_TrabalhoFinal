@@ -29,22 +29,22 @@ import persistence.FichaTreinoDao;
 import persistence.ProfessorDao;
 import util.HibernateUtil;
 
-public class FichaTreinoControl implements IAcoesStrategy<FichaTreino> {
+public class FichaTreinoControl implements IAcoes<FichaTreino> {
 	
 	private ObservableList<FichaTreino> treinosList = FXCollections.observableArrayList();
 	private TableView<FichaTreino> table = new TableView<>();
 	private Aluno aluno;
 	private Professor professor;
 	
-	private IntegerProperty idTreino = new SimpleIntegerProperty();
+	private IntegerProperty id = new SimpleIntegerProperty();
 	private StringProperty nomeAluno = new SimpleStringProperty("");
 	private StringProperty nomeProfessor = new SimpleStringProperty("");
-	private ObjectProperty<LocalDate> dataTreino = new SimpleObjectProperty<>();
-	private StringProperty tipoTreino = new SimpleStringProperty("");
+	private ObjectProperty<LocalDate> data = new SimpleObjectProperty<>();
+	private StringProperty tipo = new SimpleStringProperty("");
 	private StringProperty infoAdicional = new SimpleStringProperty("");
 
-	public IntegerProperty idTreinoProperty() {
-		return idTreino;
+	public IntegerProperty idProperty() {
+		return id;
 	}
 	
 	public StringProperty nomeAlunoProperty() {
@@ -55,12 +55,12 @@ public class FichaTreinoControl implements IAcoesStrategy<FichaTreino> {
 		return nomeProfessor;
 	}
 	
-	public ObjectProperty<LocalDate> dataTreinoProperty() {
-		return dataTreino;
+	public ObjectProperty<LocalDate> dataProperty() {
+		return data;
 	}
 
-	public StringProperty tipoTreinoProperty() {
-		return tipoTreino;
+	public StringProperty tipoProperty() {
+		return tipo;
 	}
 
 	public StringProperty infoAdicionalProperty() {
@@ -76,15 +76,15 @@ public class FichaTreinoControl implements IAcoesStrategy<FichaTreino> {
 		TableColumn<FichaTreino, String> tipoTreinoCol = new TableColumn<>("Tipo de Treino");
 		TableColumn<FichaTreino, String> infoCol = new TableColumn<>("Informações Adicionais");
 
-		idCol.setCellValueFactory(new PropertyValueFactory<FichaTreino, String>("idTreino"));
+		idCol.setCellValueFactory(new PropertyValueFactory<FichaTreino, String>("id"));
 		alunoCol.setCellValueFactory(new PropertyValueFactory<FichaTreino, String>("nomeAluno"));
 		professorCol.setCellValueFactory(new PropertyValueFactory<FichaTreino, String>("nomeProfessor"));
 		dataTreinoCol.setCellValueFactory(data -> {
-			LocalDate dataT = data.getValue().getDataTreino();
+			LocalDate dataT = data.getValue().getData();
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			return new ReadOnlyStringWrapper(dataT.format(formatter));
 		});
-		tipoTreinoCol.setCellValueFactory(new PropertyValueFactory<FichaTreino, String>("tipoTreino"));
+		tipoTreinoCol.setCellValueFactory(new PropertyValueFactory<FichaTreino, String>("tipo"));
 		infoCol.setCellValueFactory(new PropertyValueFactory<FichaTreino, String>("infoAdicional"));
 		
 		table.getColumns().addAll(idCol, alunoCol, professorCol, dataTreinoCol, tipoTreinoCol, infoCol);
@@ -95,6 +95,7 @@ public class FichaTreinoControl implements IAcoesStrategy<FichaTreino> {
 		return table;
 	}
 	
+	@Override
 	public void adicionar() throws ClassNotFoundException, SQLException {
 		FichaTreino tr = getEntidade();
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -106,12 +107,13 @@ public class FichaTreinoControl implements IAcoesStrategy<FichaTreino> {
 		treinosList.addAll(lista);
 	}
 
+	@Override
 	public void pesquisar() throws ClassNotFoundException, SQLException {
 		FichaTreino tr = getEntidade();
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		FichaTreinoDao dao = new FichaTreinoDao(sessionFactory);
 		
-		if(idTreino.get() != 0) {
+		if(id.get() > 0) {
 			FichaTreino treino = dao.selectOne(tr);
 			treinosList.clear();
 			treinosList.add(treino);
@@ -145,6 +147,7 @@ public class FichaTreinoControl implements IAcoesStrategy<FichaTreino> {
 		nomeProfessor.set(professor.getNome());
 	}
 	
+	@Override
 	public void atualizar() throws ClassNotFoundException, SQLException {
 		FichaTreino tr = getEntidade();
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -156,6 +159,7 @@ public class FichaTreinoControl implements IAcoesStrategy<FichaTreino> {
 		treinosList.addAll(lista);
 	}
 	
+	@Override
 	public void excluir() throws ClassNotFoundException, SQLException {
 		FichaTreino tr = getEntidade();
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
@@ -167,6 +171,7 @@ public class FichaTreinoControl implements IAcoesStrategy<FichaTreino> {
 		treinosList.addAll(lista);
 	}
 	
+	@Override
 	public void listar() throws ClassNotFoundException, SQLException {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		FichaTreinoDao dao = new FichaTreinoDao(sessionFactory);
@@ -178,9 +183,9 @@ public class FichaTreinoControl implements IAcoesStrategy<FichaTreino> {
 	
 	public FichaTreino getEntidade() {
 		FichaTreino tr = new FichaTreino();
-		tr.setId(idTreino.get());
-		tr.setDataTreino(dataTreino.get());
-		tr.setTipoTreino(tipoTreino.get());
+		tr.setId(id.get());
+		tr.setData(data.get());
+		tr.setTipo(tipo.get());
 		tr.setInfoAdicional(infoAdicional.get());
 		
 		if(!nomeAluno.get().isEmpty()) {
@@ -211,11 +216,11 @@ public class FichaTreinoControl implements IAcoesStrategy<FichaTreino> {
 	}
 	
 	public void setEntidade(FichaTreino tr) {
-		idTreino.set(tr.getId());
+		id.set(tr.getId());
 		nomeAluno.set(tr.getAluno().getNome());
 		nomeProfessor.set(tr.getProfessor().getNome());
-		dataTreino.set(tr.getDataTreino());
-		tipoTreino.set(tr.getTipoTreino());
+		data.set(tr.getData());
+		tipo.set(tr.getTipo());
 		infoAdicional.set(tr.getInfoAdicional());
 	}
 	

@@ -94,8 +94,8 @@ public class FichaTreinoDao implements IObjDao<FichaTreino>, IFichaTreinoDao {
 			
 			FichaTreino treino = new FichaTreino();
 			treino.setId(Integer.parseInt(obj[21].toString()));
-			treino.setDataTreino(LocalDate.parse(obj[22].toString()));
-			treino.setTipoTreino(obj[23].toString());
+			treino.setData(LocalDate.parse(obj[22].toString()));
+			treino.setTipo(obj[23].toString());
 			treino.setInfoAdicional(obj[24].toString());
 			treino.setAluno(aluno);
 			treino.setProfessor(professor);
@@ -117,12 +117,10 @@ public class FichaTreinoDao implements IObjDao<FichaTreino>, IFichaTreinoDao {
 		sql.append("FROM aluno a, endereco ea, professor p, endereco ep, ficha_treino t ");
 		sql.append("WHERE a.id = t.id_aluno AND ea.id = a.id_endereco ");
 		sql.append("AND p.id = t.id_professor AND ep.id = p.id_endereco ");
-		sql.append("AND a.id = ?1 OR a.nome LIKE '%?2%' ");
+		sql.append("AND a.nome LIKE '%" + treino.getAluno().getNome() + "%' ");
 
 		EntityManager entityManager = sf.createEntityManager();
 		Query query = entityManager.createNativeQuery(sql.toString());
-		query.setParameter(1, treino.getAluno().getId());
-		query.setParameter(2, treino.getAluno().getNome());
 
 		List<Object[]> treinosResultSet = query.getResultList();
 		List<FichaTreino> treinos = new ArrayList<FichaTreino>();
@@ -151,8 +149,8 @@ public class FichaTreinoDao implements IObjDao<FichaTreino>, IFichaTreinoDao {
 			
 			treino = new FichaTreino();
 			treino.setId(Integer.parseInt(obj[21].toString()));
-			treino.setDataTreino(LocalDate.parse(obj[22].toString()));
-			treino.setTipoTreino(obj[23].toString());
+			treino.setData(LocalDate.parse(obj[22].toString()));
+			treino.setTipo(obj[23].toString());
 			treino.setInfoAdicional(obj[24].toString());
 			treino.setAluno(aluno);
 			treino.setProfessor(professor);
@@ -206,8 +204,8 @@ public class FichaTreinoDao implements IObjDao<FichaTreino>, IFichaTreinoDao {
 			
 			treino = new FichaTreino();
 			treino.setId(Integer.parseInt(obj[21].toString()));
-			treino.setDataTreino(LocalDate.parse(obj[22].toString()));
-			treino.setTipoTreino(obj[23].toString());
+			treino.setData(LocalDate.parse(obj[22].toString()));
+			treino.setTipo(obj[23].toString());
 			treino.setInfoAdicional(obj[24].toString());
 			treino.setAluno(aluno);
 			treino.setProfessor(professor);
@@ -227,12 +225,10 @@ public class FichaTreinoDao implements IObjDao<FichaTreino>, IFichaTreinoDao {
 		sql.append("FROM aluno a, endereco ea, professor p, endereco ep, ficha_treino t ");
 		sql.append("WHERE a.id = t.id_aluno AND ea.id = a.id_endereco ");
 		sql.append("AND p.id = t.id_professor AND ep.id = p.id_endereco ");
-		sql.append("AND p.id = ?1 OR p.nome LIKE '%?2%' ");
+		sql.append("AND p.nome LIKE '%" + treino.getProfessor().getNome() + "%' ");
 
 		EntityManager entityManager = sf.createEntityManager();
 		Query query = entityManager.createNativeQuery(sql.toString());
-		query.setParameter(1, treino.getProfessor().getId());
-		query.setParameter(2, treino.getProfessor().getNome());
 
 		List<Object[]> treinosResultSet = query.getResultList();
 		List<FichaTreino> treinos = new ArrayList<FichaTreino>();
@@ -261,8 +257,8 @@ public class FichaTreinoDao implements IObjDao<FichaTreino>, IFichaTreinoDao {
 			
 			treino = new FichaTreino();
 			treino.setId(Integer.parseInt(obj[21].toString()));
-			treino.setDataTreino(LocalDate.parse(obj[22].toString()));
-			treino.setTipoTreino(obj[23].toString());
+			treino.setData(LocalDate.parse(obj[22].toString()));
+			treino.setTipo(obj[23].toString());
 			treino.setInfoAdicional(obj[24].toString());
 			treino.setAluno(aluno);
 			treino.setProfessor(professor);

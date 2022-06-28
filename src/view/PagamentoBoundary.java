@@ -83,11 +83,11 @@ public class PagamentoBoundary extends Application {
 		StringConverter<LocalDate> converterDate = new LocalDateStringConverter();
 		StringConverter<Number> converterNumber = new NumberStringConverter();
 
-		Bindings.bindBidirectional(idTxt.textProperty(), control.idPagamentoProperty(), converterNumber);
+		Bindings.bindBidirectional(idTxt.textProperty(), control.idProperty(), converterNumber);
 		Bindings.bindBidirectional(alunoTxt.textProperty(), control.nomeAlunoProperty());
-		Bindings.bindBidirectional(dataPagTxt.textProperty(), control.dataPagamentoProperty(), converterDate);
-		Bindings.bindBidirectional(valorPagTxt.textProperty(), control.valorPagamentoProperty(), converterNumber);
-		Bindings.bindBidirectional(tipoPagTxt.textProperty(), control.tipoPagamentoProperty());
+		Bindings.bindBidirectional(dataPagTxt.textProperty(), control.dataProperty(), converterDate);
+		Bindings.bindBidirectional(valorPagTxt.textProperty(), control.valorProperty(), converterNumber);
+		Bindings.bindBidirectional(tipoPagTxt.textProperty(), control.tipoProperty());
 		Bindings.bindBidirectional(infoTxt.textProperty(), control.infoAdicionalProperty());
 		
 		pesquisarAlunoBt.setOnAction((e) -> {
