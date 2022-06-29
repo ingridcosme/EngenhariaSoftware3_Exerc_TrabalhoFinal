@@ -58,6 +58,11 @@ public class AlunoBuilder {
         return this;
     }
     
+    public AlunoBuilder addDataMaxAcesso(LocalDate dataMax) {
+        this.aluno.setDataLimiteDeAcesso(dataMax);
+        return this;
+    }
+    
     public Aluno get() {
         this.aluno.setEndereco(this.endereco);
         return this.aluno;

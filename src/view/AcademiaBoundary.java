@@ -20,6 +20,7 @@ public class AcademiaBoundary extends Application {
 	private Button professorBt = new Button("PROFESSORES");
 	private Button pagamentoBt = new Button("PAGAMENTOS");
 	private Button fichaTreinoBt = new Button("FICHAS DE TREINO");
+	private Button acessoLiberadoBt = new Button("ACESSOS LIBERADOS");
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -28,41 +29,42 @@ public class AcademiaBoundary extends Application {
 
 		VBox coluna1 = new VBox();
 		coluna1.setSpacing(40);
-		coluna1.setAlignment(Pos.CENTER);
 		coluna1.setPadding(new Insets(30, 30, 30, 30));
 		
 		VBox coluna2 = new VBox();
 		coluna2.setSpacing(40);
-		coluna2.setAlignment(Pos.CENTER);
 		coluna2.setPadding(new Insets(30, 30, 30, 30));
 		
 		GridPane grid = new GridPane();
 		grid.setPadding(new Insets(30, 30, 30, 30));
 		grid.setAlignment(Pos.CENTER);
-		grid.add(menuLb, 0, 0, 2, 1);
+		grid.add(menuLb, 0, 0);
 		grid.add(coluna1, 0, 1);
 		grid.add(coluna2, 1, 1);
+		grid.setHgap(100);
+		grid.setVgap(80);
 		
 		Scene scene = new Scene(grid, 1200, 700);
-		double altura = (scene.getHeight() / 2d);
-		double largura = (scene.getWidth() / 4d);
 
 		menuLb.setFont(Font.font("Verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 		
-		alunoBt.setFont(Font.font(20d));
-		alunoBt.setPrefSize(altura, largura);
+		alunoBt.setFont(Font.font(16d));
+		alunoBt.setPrefSize(200, 100);
 		
-		professorBt.setFont(Font.font(20d));
-		professorBt.setPrefSize(altura, largura);
+		professorBt.setFont(Font.font(16d));
+		professorBt.setPrefSize(200, 100);
 		
-		pagamentoBt.setFont(Font.font(20d));
-		pagamentoBt.setPrefSize(altura, largura);
+		pagamentoBt.setFont(Font.font(16d));
+		pagamentoBt.setPrefSize(200, 100);
 		
-		fichaTreinoBt.setFont(Font.font(20d));
-		fichaTreinoBt.setPrefSize(altura, largura);
+		fichaTreinoBt.setFont(Font.font(16d));
+		fichaTreinoBt.setPrefSize(200, 100);
 		
-		coluna1.getChildren().addAll(alunoBt, professorBt);
-		coluna2.getChildren().addAll(pagamentoBt, fichaTreinoBt);
+		acessoLiberadoBt.setFont(Font.font(16d));
+		acessoLiberadoBt.setPrefSize(200, 100);
+		
+		coluna1.getChildren().addAll(alunoBt, professorBt, pagamentoBt);
+		coluna2.getChildren().addAll(fichaTreinoBt, acessoLiberadoBt);
 		
 		alunoBt.setOnAction(e -> {
 			BoundaryAluno boundaryAluno = new BoundaryAluno();
@@ -95,6 +97,15 @@ public class AcademiaBoundary extends Application {
 			FichaTreinoBoundary fichaTreinoBoundary = new FichaTreinoBoundary();
 			try {
 				fichaTreinoBoundary.start(stage);
+			} catch (Exception e4) {
+				e4.printStackTrace();
+			}
+		});
+		
+		acessoLiberadoBt.setOnAction(e -> {
+			AcessoLiberadoBoundary acessoLiberadoBoundary = new AcessoLiberadoBoundary();
+			try {
+				acessoLiberadoBoundary.start(stage);
 			} catch (Exception e4) {
 				e4.printStackTrace();
 			}

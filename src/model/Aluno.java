@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -42,6 +43,18 @@ public class Aluno {
 	@Column(name = "telefone", length = 11)
 	@NotNull
 	private String telefone;
+	
+	@Transient
+	private boolean liberado;
+	
+	@Column(name = "data_max_acesso")
+	@NotNull
+	private LocalDate dataLimiteDeAcesso;
+	
+	public Aluno() {
+		this.liberado = false;
+		this.dataLimiteDeAcesso = LocalDate.of(1990, 01, 01);
+	}
 	
 	public int getId() {
 		return id;
@@ -86,6 +99,22 @@ public class Aluno {
 	
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+	
+	public boolean isLiberado() {
+		return liberado;
+	}
+
+	public void setLiberado(boolean liberado) {
+		this.liberado = liberado;
+	}
+	
+	public LocalDate getDataLimiteDeAcesso() {
+		return dataLimiteDeAcesso;
+	}
+	
+	public void setDataLimiteDeAcesso(LocalDate dataLimiteDeAcesso) {
+		this.dataLimiteDeAcesso = dataLimiteDeAcesso;
 	}
 	
 	@Override

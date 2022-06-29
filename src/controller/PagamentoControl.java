@@ -103,6 +103,9 @@ public class PagamentoControl implements IAcoes<Pagamento> {
 		pagamentosList.clear();
 		List<Pagamento> pags = dao.selectAll();
 		pagamentosList.addAll(pags);
+		
+		AcessoLiberadoControl acesso = new AcessoLiberadoControl();
+		acesso.atualizarAcesso(pag);
 	}
 	
 	@Override

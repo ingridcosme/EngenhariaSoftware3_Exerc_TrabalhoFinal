@@ -62,7 +62,7 @@ public class AlunoDao implements IObjDao<Aluno> {
 	public Aluno selectOne(Aluno aluno) throws SQLException {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT a.id, a.nome, a.cpf, a.nascimento, a.telefone, ");
-		sql.append("e.id, e.logradouro, e.numero, e.bairro, e.cep ");
+		sql.append("e.id, e.logradouro, e.numero, e.bairro, e.cep, a.data_max_acesso ");
 		sql.append("FROM aluno a, endereco e ");
 		sql.append("WHERE a.id_endereco = e.id ");
 		sql.append("AND a.nome LIKE '%" + aluno.getNome() + "%' ");
@@ -80,6 +80,7 @@ public class AlunoDao implements IObjDao<Aluno> {
 					.addNascimento(LocalDate.parse(obj[3].toString()))
 					.addTelefone(obj[4].toString())
 					.addEndereco(Integer.parseInt(obj[5].toString()), obj[6].toString(), Integer.parseInt(obj[7].toString()), obj[8].toString(), obj[9].toString())
+					.addDataMaxAcesso(LocalDate.parse(obj[10].toString()))
 					.get();
 		}
 		return aluno;
@@ -90,7 +91,7 @@ public class AlunoDao implements IObjDao<Aluno> {
 	public List<Aluno> selectAll() throws SQLException {
 		StringBuffer sql = new StringBuffer();
 		sql.append("SELECT a.id, a.nome, a.cpf, a.nascimento, a.telefone, ");
-		sql.append("e.id, e.logradouro, e.numero, e.bairro, e.cep ");
+		sql.append("e.id, e.logradouro, e.numero, e.bairro, e.cep, a.data_max_acesso ");
 		sql.append("FROM aluno a, endereco e ");
 		sql.append("WHERE a.id_endereco = e.id ");
 
@@ -108,6 +109,7 @@ public class AlunoDao implements IObjDao<Aluno> {
 					.addNascimento(LocalDate.parse(obj[3].toString()))
 					.addTelefone(obj[4].toString())
 					.addEndereco(Integer.parseInt(obj[5].toString()), obj[6].toString(), Integer.parseInt(obj[7].toString()), obj[8].toString(), obj[9].toString())
+					.addDataMaxAcesso(LocalDate.parse(obj[10].toString()))
 					.get();
 
 			alunos.add(aluno);
